@@ -12,6 +12,8 @@ namespace GamePlay {
 	void GamePlay::GamePlayController::Intialize()
 	{
 		gameplayView->intialize(this);
+		Reset();
+	
 	}
 
 	void GamePlay::GamePlayController::Update()
@@ -26,5 +28,7 @@ namespace GamePlay {
 
 	void GamePlay::GamePlayController::Reset()
 	{
+		
 	}
+	
 }

@@ -42,4 +42,24 @@ namespace GamePlay {
 		std::srand(static_cast<unsigned int>(time(nullptr)));
 
 	}
+	void GamePlayService::SearchElenment(Collection::SearchType searchtype)
+	{
+		stickCollectionController->SetSearchType(searchtype);
+	}
+	Collection::SearchType GamePlayService::getCurrentSearchtype()
+	{
+		return stickCollectionController->GetSearchtype();
+	}
+	int GamePlayService::GetNUmberOfComprisons()
+	{
+		return stickCollectionController->GetnumberOfComparisons();
+	}
+	int GamePlayService::GetNumberOfArrayAccess()
+	{
+		return stickCollectionController->Getnumberofarrayaccess();
+	}
+	int GamePlayService::GetDelayMilliseconds()
+	{
+		return stickCollectionController->GetDelayMilliSeconds();
+	}
 }

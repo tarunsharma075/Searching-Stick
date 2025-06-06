@@ -9,6 +9,7 @@ class GamePlayService {
 private:
 	GamePlayController* gameplayController;
 	StickCollectionController* stickCollectionController;
+	enum class SearchType;
 public:
 	GamePlayService();
 	~GamePlayService();
@@ -17,6 +18,12 @@ public:
 	void Render();
 	void Reset();
 	void IntializeRandomSeed();
+	void SearchElenment(Collection::SearchType searchtype);
+	Collection::SearchType getCurrentSearchtype();
+	int GetNUmberOfComprisons();
+	int GetNumberOfArrayAccess();
+	int GetDelayMilliseconds();
+	
 };
 
 }

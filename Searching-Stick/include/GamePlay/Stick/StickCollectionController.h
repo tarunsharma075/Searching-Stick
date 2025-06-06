@@ -1,5 +1,6 @@
 #pragma once
 #include<vector>
+#include<thread>
 namespace GamePlay {
 	namespace Collection {
 		class StickCollectionModel;
@@ -11,6 +12,8 @@ namespace GamePlay {
 		private:
 			StickCollectionModel* stickcollectionmodel;
 			StickCollectionView* stickcollectionview;
+			int currentOprationDelay;
+			std::thread searchThread;
 			std::vector<Stick*>Sticks;
 			Collection::SearchType search;
 			void IntializeSticks();
@@ -21,6 +24,7 @@ namespace GamePlay {
 			void IntializeSticksArrays();
 			int numberOfComparisons;
 			int numberofarrayaccesses;
+			void JoinThreads();
 		public:
 			StickCollectionController();
 			~StickCollectionController();
@@ -39,6 +43,8 @@ namespace GamePlay {
 			void resetvariables();
 			int GetnumberOfComparisons();
 			int Getnumberofarrayaccess();
+			int GetDelayMilliSeconds();
+			void ProcesssearchThreads();
 		};
 	}
 }

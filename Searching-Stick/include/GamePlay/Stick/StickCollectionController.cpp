@@ -55,6 +55,10 @@ namespace GamePlay {
 		}
 
 		}
+		void StickCollectionController::JoinThreads()
+		{
+			searchThread.join();
+		}
 		GamePlay::Collection::StickCollectionController::StickCollectionController()
 		{
 			stickcollectionmodel = new StickCollectionModel();
@@ -64,18 +68,29 @@ namespace GamePlay {
 
 		GamePlay::Collection::StickCollectionController::~StickCollectionController()
 		{
+			if (searchThread.joinable()) {
+				searchThread.join();
+
+			}
+			for (int i = 0; i < Sticks.size(); i++) {
+				
+				delete Sticks[i];
+				Sticks.clear();
+			}
 			delete(stickcollectionmodel);
 			delete(stickcollectionview);
 		}
 
 		void GamePlay::Collection::StickCollectionController::Intialize()
 		{
+			stickcollectionmodel->Intialize();
 			IntializeSticks();
 			reset();
 		}
 
 		void GamePlay::Collection::StickCollectionController::Update()
 		{
+			ProcesssearchThreads();
 			for (int i = 0; i < Sticks.size(); i++)
 			{
 				Sticks[i]->stickView->update();
@@ -105,7 +120,8 @@ namespace GamePlay {
 			search = searchtype;
 			switch (search) {
 			case GamePlay::Collection::SearchType::Linear:
-				processLinearSearch();
+				currentOprationDelay = stickcollectionmodel->linear_search_delay;
+				searchThread = std::thread(&StickCollectionController::processLinearSearch, this);
 				break;
 			}
 		}
@@ -117,6 +133,7 @@ namespace GamePlay {
 			ResetStickcolor();
 			SticktoSearch();
 			resetvariables();
+			currentOprationDelay = 0;
 		}
 
 		void StickCollectionController::ShuffleSticks()
@@ -130,7 +147,7 @@ namespace GamePlay {
 
 		void StickCollectionController::SticktoSearch()
 		{
-			sticktoSearch = Sticks[rand() % stickcollectionmodel->number_of_elements];
+			sticktoSearch = Sticks[rand() % Sticks.size()];
 			sticktoSearch->stickView->setFillColor(stickcollectionmodel->search_element_color);
 		}
 
@@ -149,6 +166,7 @@ namespace GamePlay {
 				}
 				else {
 					Sticks[i]->stickView->setFillColor(stickcollectionmodel->processing_element_color);
+					std::this_thread::sleep_for(std::chrono::milliseconds(currentOprationDelay));
 					Sticks[i]->stickView->setFillColor(stickcollectionmodel->element_color);
 				}
 
@@ -170,6 +188,18 @@ namespace GamePlay {
 		int StickCollectionController::Getnumberofarrayaccess()
 		{
 			return numberofarrayaccesses;
+		}
+
+		int StickCollectionController::GetDelayMilliSeconds()
+		{
+			return currentOprationDelay;
+		}
+
+		void StickCollectionController::ProcesssearchThreads()
+		{
+			if (searchThread.joinable() && sticktoSearch == nullptr) {
+				JoinThreads();
+			}
 		}
 
 	}
