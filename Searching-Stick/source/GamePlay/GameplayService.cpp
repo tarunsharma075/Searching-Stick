@@ -1,5 +1,7 @@
 #include"../../include/GamePlay/GameplayController.h"
 #include"../../include/GamePlay/GameplayService.h"
+#include<random>
+#include<time.h>
 
 namespace GamePlay {
 	using namespace Collection;
@@ -18,6 +20,7 @@ namespace GamePlay {
 {
 		gameplayController->Intialize();
 		stickCollectionController->Intialize();
+		IntializeRandomSeed();
 }
 	void GamePlayService::Update()
 	{
@@ -33,5 +36,10 @@ namespace GamePlay {
 	{
 		gameplayController->Reset();
 		stickCollectionController->reset();
+	}
+	void GamePlayService::IntializeRandomSeed()
+	{
+		std::srand(static_cast<unsigned int>(time(nullptr)));
+
 	}
 }

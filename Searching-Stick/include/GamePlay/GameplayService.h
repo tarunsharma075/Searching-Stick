@@ -7,15 +7,16 @@ using namespace Collection;
 class GamePlayController;
 class GamePlayService {
 private:
-GamePlayController* gameplayController;
-StickCollectionController* stickCollectionController;
+	GamePlayController* gameplayController;
+	StickCollectionController* stickCollectionController;
 public:
-GamePlayService();
-~GamePlayService();
-void Intialize();
-void Update();
-void Render();
-void Reset();
+	GamePlayService();
+	~GamePlayService();
+	void Intialize();
+	void Update();
+	void Render();
+	void Reset();
+	void IntializeRandomSeed();
 };
 
 }

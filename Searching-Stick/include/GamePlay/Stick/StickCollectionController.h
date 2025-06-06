@@ -7,7 +7,7 @@ namespace GamePlay {
 		struct Stick;
 		enum class SearchType;
 		class StickCollectionController {
-		
+			Stick* sticktoSearch;
 		private:
 			StickCollectionModel* stickcollectionmodel;
 			StickCollectionView* stickcollectionview;
@@ -19,6 +19,8 @@ namespace GamePlay {
 			void UpdatestickPosition();
 			void ResetStickcolor();
 			void IntializeSticksArrays();
+			int numberOfComparisons;
+			int numberofarrayaccesses;
 		public:
 			StickCollectionController();
 			~StickCollectionController();
@@ -31,7 +33,12 @@ namespace GamePlay {
 			
 			void SetSearchType(Collection::SearchType searchtype);
 			void reset();
-
+			void ShuffleSticks();
+			void SticktoSearch();
+			void processLinearSearch();
+			void resetvariables();
+			int GetnumberOfComparisons();
+			int Getnumberofarrayaccess();
 		};
 	}
 }
