@@ -31,6 +31,7 @@ const sf::Color processing_element_color = sf::Color::Red;
 int linear_search_delay = 120;
 int number_of_elements = 100;
 void SetElementsSpacing(float spacing);
+int binary_search_delay = 100;
 
 
 

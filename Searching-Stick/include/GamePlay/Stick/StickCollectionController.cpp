@@ -9,7 +9,7 @@ namespace GamePlay {
 	namespace Collection {
 		using namespace UI::UIElement;
 		using namespace Global;
-	
+
 		void StickCollectionController::IntializeSticks()
 		{
 			float rectangleWidth = CalculateStickWidth();
@@ -51,14 +51,25 @@ namespace GamePlay {
 		}
 		void StickCollectionController::IntializeSticksArrays()
 		{
-			for (int i = 0; i < stickcollectionmodel->number_of_elements; i++){
+			for (int i = 0; i < stickcollectionmodel->number_of_elements; i++) {
 				Sticks.push_back(new Stick(i));
-		}
+			}
 
 		}
 		void StickCollectionController::JoinThreads()
 		{
 			searchThread.join();
+		}
+		void StickCollectionController::SortElements()
+		{
+			std::sort(Sticks.begin(), Sticks.end(), [this](Stick* stick1, Stick* stick2) {
+				return CompareElemenrtsBydata(stick1, stick2);
+				});
+			UpdatestickPosition();
+		}
+		bool StickCollectionController::CompareElemenrtsBydata(Stick* stick1, Stick* stick2)
+		{
+			return stick1->data < stick2->data;
 		}
 		GamePlay::Collection::StickCollectionController::StickCollectionController()
 		{
@@ -74,7 +85,7 @@ namespace GamePlay {
 
 			}
 			for (int i = 0; i < Sticks.size(); i++) {
-				
+
 				delete Sticks[i];
 				Sticks.clear();
 			}
@@ -124,6 +135,13 @@ namespace GamePlay {
 				timeComplexity = "O(n)";
 				currentOprationDelay = stickcollectionmodel->linear_search_delay;
 				searchThread = std::thread(&StickCollectionController::processLinearSearch, this);
+				break;
+				
+			case GamePlay::Collection::SearchType::Binary:
+				SortElements();
+				timeComplexity = "O(log n)";
+				currentOprationDelay = stickcollectionmodel->binary_search_delay;
+				searchThread = std::thread(&StickCollectionController::ProcessBinarySearch, this);
 				break;
 			}
 		}
@@ -209,6 +227,49 @@ namespace GamePlay {
 			return timeComplexity;
 		}
 
+		void StickCollectionController::ProcessBinarySearch()
+		{
+			// initialize left index to the start of the collection
+			int left = 0;
+
+			// initialize right index to the size of the collection which is the end
+			int right = Sticks.size();
+
+			Sound::SoundService* sound_service = Global::ServiceLocator::getInstance()->getSoundService();
+
+			// loop for binary search
+			while (left < right)
+			{
+
+				// calculate the middle index
+				int mid = left + (right - left) / 2;
+				numberofarrayaccesses += 2;				//keeps track of the number of sticks array is accessed
+				numberOfComparisons++;					// keeps track of the number of comparisons made between target stick and another stick
+
+				sound_service->playSound(Sound::SoundType::COMPARE_SFX);			// play comparison sound effect
+
+				// check if target element is found at the middle index
+				if (Sticks[mid] == sticktoSearch)
+				{
+					// if the target element is found, set color for found element
+					Sticks[mid]->stickView->setFillColor(stickcollectionmodel->found_element_color);			// sets the color of the found element to found_element_color
+					sticktoSearch = nullptr;			//ets the pointer to null; meaning the search is completed
+					return;
+				}
+
+				Sticks[mid]->stickView->setFillColor(stickcollectionmodel->processing_element_color);		// if mid is not the target element, set the stick color to processing element color
+				std::this_thread::sleep_for(std::chrono::milliseconds(currentOprationDelay));			// //pauses the thread for a small duration to show the searching operation
+				Sticks[mid]->stickView->setFillColor(stickcollectionmodel->element_color);	// sets the fill color of the mid stick's view back to the default element_color after the pause.
+
+
+				numberofarrayaccesses++;			// increment counter for array access for mid element access
+
+				// target can be in the right half or middle element itself
+				if (Sticks[mid]->data <= sticktoSearch->data) left = mid;				// target must be in the right half, mid element included beacuse '<='
+				else right = mid;
+			}
+
+		}
 	}
 }
 

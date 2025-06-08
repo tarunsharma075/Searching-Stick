@@ -36,9 +36,7 @@ namespace Sound
 		case SoundType::BUTTON_CLICK:
 			sound_effect.setBuffer(buffer_button_click);
 			break;
-		case SoundType::COMPARE_SFX:
-			sound_effect.setBuffer(compare_sound_buffer);
-			break;
+		
 		default:
 			printf("Invalid sound type");
 			return;

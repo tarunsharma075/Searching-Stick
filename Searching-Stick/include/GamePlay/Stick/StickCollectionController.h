@@ -15,6 +15,7 @@ namespace GamePlay {
 			StickCollectionModel* stickcollectionmodel;
 			StickCollectionView* stickcollectionview;
 			int currentOprationDelay;
+			
 			std::thread searchThread;
 			std::vector<Stick*>Sticks;
 			Collection::SearchType search;
@@ -28,6 +29,8 @@ namespace GamePlay {
 			int numberofarrayaccesses;
 			void JoinThreads();
 			sf::String timeComplexity;
+			void SortElements();
+			bool CompareElemenrtsBydata(Stick* stick1, Stick* stick2);
 		public:
 			StickCollectionController();
 			~StickCollectionController();
@@ -49,6 +52,8 @@ namespace GamePlay {
 			int GetDelayMilliSeconds();
 			void ProcesssearchThreads();
 			sf::String gettimeComplexity();
+			void ProcessBinarySearch();
+			
 		};
 	}
 }
