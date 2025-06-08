@@ -1,8 +1,10 @@
 #pragma once
 #include<vector>
 #include<thread>
+#include<SFML/Graphics.hpp>
 namespace GamePlay {
 	namespace Collection {
+		
 		class StickCollectionModel;
 		class StickCollectionView;
 		struct Stick;
@@ -25,6 +27,7 @@ namespace GamePlay {
 			int numberOfComparisons;
 			int numberofarrayaccesses;
 			void JoinThreads();
+			sf::String timeComplexity;
 		public:
 			StickCollectionController();
 			~StickCollectionController();
@@ -45,6 +48,7 @@ namespace GamePlay {
 			int Getnumberofarrayaccess();
 			int GetDelayMilliSeconds();
 			void ProcesssearchThreads();
+			sf::String gettimeComplexity();
 		};
 	}
 }

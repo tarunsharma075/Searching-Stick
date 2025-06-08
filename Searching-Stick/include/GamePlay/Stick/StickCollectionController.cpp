@@ -9,6 +9,7 @@ namespace GamePlay {
 	namespace Collection {
 		using namespace UI::UIElement;
 		using namespace Global;
+	
 		void StickCollectionController::IntializeSticks()
 		{
 			float rectangleWidth = CalculateStickWidth();
@@ -120,6 +121,7 @@ namespace GamePlay {
 			search = searchtype;
 			switch (search) {
 			case GamePlay::Collection::SearchType::Linear:
+				timeComplexity = "O(n)";
 				currentOprationDelay = stickcollectionmodel->linear_search_delay;
 				searchThread = std::thread(&StickCollectionController::processLinearSearch, this);
 				break;
@@ -200,6 +202,11 @@ namespace GamePlay {
 			if (searchThread.joinable() && sticktoSearch == nullptr) {
 				JoinThreads();
 			}
+		}
+
+		sf::String StickCollectionController::gettimeComplexity()
+		{
+			return timeComplexity;
 		}
 
 	}

@@ -23,6 +23,8 @@ public:
 	int GetNUmberOfComprisons();
 	int GetNumberOfArrayAccess();
 	int GetDelayMilliseconds();
+	int getNumberOfSticks();
+	sf::String getTimeComplexity();
 	
 };
 

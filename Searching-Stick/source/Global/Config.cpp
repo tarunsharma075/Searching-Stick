@@ -19,4 +19,6 @@ namespace Global
 	const sf::String Config::button_click_sound_path = "assets/sounds/button_click_sound.wav";
 
 	const sf::String Config::compare_sfx_path = "assets/sounds/compare_sfx.wav";
+
+	const sf::String Global::Config::menu_button_large_texture_path = "assets/textures/menu_button_large.png";
 }

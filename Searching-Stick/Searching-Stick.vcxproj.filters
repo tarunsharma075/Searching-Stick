@@ -81,6 +81,9 @@
     <ClCompile Include="source\UI\UIElement\RectangleShapeView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\UI\GamePlay\GameplayUIController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Event\EventService.h">
@@ -147,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GamePlay\Stick\StickCollectionController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\GamePlay\GameplayUIController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

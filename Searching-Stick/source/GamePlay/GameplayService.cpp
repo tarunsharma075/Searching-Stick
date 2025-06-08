@@ -62,4 +62,12 @@ namespace GamePlay {
 	{
 		return stickCollectionController->GetDelayMilliSeconds();
 	}
+	int GamePlayService::getNumberOfSticks()
+	{
+		return stickCollectionController->GetNumberOfElements();
+	}
+	sf::String GamePlayService::getTimeComplexity()
+	{
+		return stickCollectionController->gettimeComplexity();
+	}
 }
